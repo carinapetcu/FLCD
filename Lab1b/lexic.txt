@@ -26,7 +26,7 @@ STRING = “{LETTER | DIGIT}”
 3.	Integer - rule:
 NUMBER = "0" | NONZERODIGITS[{DIGIT}]
 NONZERODIGITS = “1” | ... | “9”
-SIGNNUMBER = [(“+” | “-“)] NUMBER
+SIGNNUMBER = [“+” | “-“] NUMBER
 
 4.	Bool:
 BOOLDIGIT = “0” | “1”

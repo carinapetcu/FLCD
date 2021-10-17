@@ -1,0 +1,37 @@
+Lab 1b - Lexic
+Alphabet:
+a.	Upper (A-Z) and lower case letters (a-z) of the English alphabet
+b.	Underline character '_'
+c.	Decimal digits (0-9)
+Lexic:
+a.	Special symbols, representing:
+o	Operators
+-	Arithmetic + - * / %
+-	Relational == < <= >= > <>
+-	Logical && || !
+-	Assignment =
+o	Separators : ; space [] {}
+o	Reserved words if else int char bool float for while do @
+b.	Identifiers (sequence of uppercase or lowercase letters and numbers, which starts with a letter)
+    IDENTIFIER = LETTER {LETTER | DIGIT}
+    LETTER = “A” | “B” | ... | “Z” | “a” | “b” | … | “z”
+    DIGIT = “0” | “1” | ... | “9”
+c.	Constants
+1.	Character
+CHARACTER = ‘LETTER’ | ‘DIGIT’
+
+2.	String
+STRING = “{LETTER | DIGIT}”
+
+3.	Integer - rule:
+NUMBER = {DIGIT}
+SIGNNUMBER = “+”NUMBER | “-“NUMBER | NUMBER
+
+4.	Float – rule:
+FLOATNUMBER = {DIGIT}”.”{DIGIT}
+FLOATSIGNNUMBER = “+”FLOATNUMBER | “-“FLOATNUMBER | FLOATNUMBER
+
+5.	Bool:
+BOOLDIGIT = “0” | “1”
+
+

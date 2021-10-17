@@ -4,7 +4,6 @@
 /
 %
 <
-<<<<<<< HEAD
 <=
 >
 >=
@@ -14,13 +13,6 @@
 !
 =
 ==
-=======
->
-&
-|
-!
-=
->>>>>>> 313b37c0d8a0f3d2ce8077131780ccfe079b090f
 :
 ;
 Space
@@ -33,12 +25,5 @@ else
 int
 char
 bool
-<<<<<<< HEAD
 while
-=======
-float
-for
-while
-do
->>>>>>> 313b37c0d8a0f3d2ce8077131780ccfe079b090f
 @

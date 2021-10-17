@@ -11,7 +11,11 @@ o	Operators
 -	Logical && || !
 -	Assignment =
 o	Separators : ; space [] {}
+<<<<<<< HEAD
+o	Reserved words if else int char bool for while @
+=======
 o	Reserved words if else int char bool float for while do @
+>>>>>>> 313b37c0d8a0f3d2ce8077131780ccfe079b090f
 b.	Identifiers (sequence of uppercase or lowercase letters and numbers, which starts with a letter)
     IDENTIFIER = LETTER {LETTER | DIGIT}
     LETTER = “A” | “B” | ... | “Z” | “a” | “b” | … | “z”
@@ -24,6 +28,13 @@ CHARACTER = ‘LETTER’ | ‘DIGIT’
 STRING = “{LETTER | DIGIT}”
 
 3.	Integer - rule:
+<<<<<<< HEAD
+NUMBER = "0" | NONZERODIGITS[{DIGIT}]
+NONZERODIGITS = “1” | ... | “9”
+SIGNNUMBER = “+”NUMBER | “-“NUMBER | NUMBER
+
+4.	Bool:
+=======
 NUMBER = {DIGIT}
 SIGNNUMBER = “+”NUMBER | “-“NUMBER | NUMBER
 
@@ -32,6 +43,7 @@ FLOATNUMBER = {DIGIT}”.”{DIGIT}
 FLOATSIGNNUMBER = “+”FLOATNUMBER | “-“FLOATNUMBER | FLOATNUMBER
 
 5.	Bool:
+>>>>>>> 313b37c0d8a0f3d2ce8077131780ccfe079b090f
 BOOLDIGIT = “0” | “1”
 
 

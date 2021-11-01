@@ -1,0 +1,17 @@
+{
+@first: int;
+@second: int;
+@third: int;
+@smallest: int;
+>>first;
+>>second;
+>>third;
+if first <= second && first <= third {
+smallest = first;
+} else if second <= first && second <= third {
+smallest = second;
+} else {
+smallest = third;
+}
+<<smallest;
+}

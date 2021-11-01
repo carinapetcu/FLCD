@@ -9,8 +9,8 @@ o	Operators
 -	Arithmetic + - * / %
 -	Relational == < <= >= > <>
 -	Logical && || !
--	Assignment =
-o	Separators : ; space [] {}
+-	Assignment = >> << 
+o	Separators : ; space [] {} \n \t
 o	Reserved words if else int char bool for while @
 b.	Identifiers (sequence of uppercase or lowercase letters and numbers, which starts with a letter)
     IDENTIFIER = LETTER {LETTER | DIGIT}
@@ -21,7 +21,7 @@ c.	Constants
 CHARACTER = ‘LETTER’ | ‘DIGIT’
 
 2.	String
-STRING = “{LETTER | DIGIT}”
+STRING = “{LETTER | DIGIT | " "}”
 
 3.	Integer - rule:
 NUMBER = "0" | NONZERODIGITS[{DIGIT}]

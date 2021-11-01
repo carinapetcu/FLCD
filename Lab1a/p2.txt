@@ -1,0 +1,19 @@
+{
+@number: int;
+@isPrime: int;
+@index: int;
+>>number;
+isPrime = 1;
+index = 2;
+while index <= / number 2 && isPrime == 1 {
+if % number index == 0 {
+isPrime = 0;
+}
+index = + index 1;
+}
+if isPrime == 1 {
+<<"Number is prime";
+} else {
+<<"Number is not prime";
+}
+}

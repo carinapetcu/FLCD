@@ -1,5 +1,4 @@
 import copy
-
 from parser_output import ParserOutput
 
 EPSILON = 'epsilon'
@@ -65,7 +64,7 @@ class Parser:
 
                 if production[0] in non_terminal_symbols:
                     for element in production:
-                        if element in non_terminal_symbols:
+                        if element in non_terminal_symbols and nonEmpty:
                             if not self.first[element]:
                                 nonEmpty = False
                                 continue
@@ -78,15 +77,19 @@ class Parser:
                         for index in range(2, len(non_terminal_symbols_first)):
                             result = self.concatenate(result, self.first[non_terminal_symbols_first[index]])
 
-                        value.extend(result)
-                        value = list(set(value))
-                    elif nonEmpty and len(non_terminal_symbols_first) == 1:
-                        value = self.first[non_terminal_symbols_first[0]]
+                        # value.extend(result)
+                        for result_element in result:
+                            if result_element not in value:
+                                value.append(result_element)
 
+                        # value = list(set(value))
+                    elif nonEmpty and len(non_terminal_symbols_first) == 1:
+                        value.extend(self.first[non_terminal_symbols_first[0]])
+                        value = list(set(value))
             current[symbol] = value
 
-        if self.first != current:
-            self.first = current
+        if not self.compare_dictionaries(self.first, current):
+            self.first = copy.deepcopy(current)
             self.first_function()
 
     def initialize_follow(self):
@@ -195,6 +198,8 @@ class Parser:
                     if (left, key_value) not in self.parsing_table:
                         self.parsing_table[(left, key_value)] = (right, index + 1)
                     else:
+                        # for key in self.parsing_table:
+                        #     print(key, self.parsing_table[key])
                         raise Exception(f'There is a conflict at row {left} and column {key_value}. \n'
                                         f'The current value is {self.parsing_table[(left, key_value)]}\n')
 
@@ -208,14 +213,13 @@ class Parser:
                         raise Exception(f'There is a conflict at row {left} and column {key_value}.\n'
                                         f'The current value is {self.parsing_table[(left, key_value)]}\n')
 
-    def parse_algorithm_start(self, sequence):
+    def parse_algorithm_start(self, sequence, output_file):
         input_stack = copy.deepcopy(sequence) + ['$']
         working_stack = [self.grammar.start_symbol, '$']
         output_stack = [EPSILON]
 
         output_stack = self.parse_algorithm(input_stack, working_stack, output_stack)
-        print(output_stack)
-        self.parser_output = ParserOutput(output_stack, self.grammar, 'out.txt')
+        self.parser_output = ParserOutput(output_stack, self.grammar, output_file)
         print(self.parser_output)
 
     def parse_algorithm(self, input_stack, working_stack, output_stack):

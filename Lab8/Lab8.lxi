@@ -1,0 +1,116 @@
+%option noyywrap
+%{ 
+#include <stdlib.h>
+#include <string.h>
+#include <math.h> 
+
+typedef struct {
+    char token[30];
+    int position;
+} structure;
+
+int pifLength = 0;
+int symbolTableLength = 0;
+
+structure pif[100];
+structure symbolTable[30];
+
+int searchInSymbolTable(char* token) {
+    int position = -1;
+    int index = 0;
+    while(index < symbolTableLength && position == -1) {
+        int found = strcmp(symbolTable[index].token, token);
+
+        if(found == 0) {
+            position = symbolTable[index].position;
+        }
+
+        index++;
+    }
+
+    return position;
+}
+
+void addToPifWithPosition(char* token, int position) {
+    strcpy(pif[pifLength].token, token);
+    pif[pifLength].position = position;
+    pifLength++;
+}
+
+// this means that we are having a token that is neither a constant or an identifier
+void addToPifWithoutPosition(char* token) {
+    printf("Adding non constant or identifier: %s\n", token);
+    addToPifWithPosition(token, 0);
+}
+
+void addConstantOrIdentifier(char* token) {
+    printf("Adding constant or identifier: %s\n", token);
+    // we search to see if the token already exists in the symbol symbolTable
+    int position = searchInSymbolTable(token);
+
+    if(position == -1) {
+        // this means that we need to add the symbol to the symbol table
+        // the position of the element in the symbol table will be the current length of it
+        addToPifWithPosition(token, symbolTableLength);
+
+        // adding the token to the symbol table
+        strcpy(symbolTable[symbolTableLength].token, token);
+        symbolTable[symbolTableLength].position = symbolTableLength;
+        symbolTableLength++;
+    } else {
+        // it already exists in the symbol table so no need to add it again
+        addToPifWithPosition(token, position);
+    }
+}
+
+void printStructures() {
+    int index;
+
+    printf("Symbol table:\n");
+    printf("Token | Position\n");
+    for(index = 0; index < symbolTableLength; index++) {
+        printf("%s | %d\n", symbolTable[index].token, symbolTable[index].position);
+    }
+
+    printf("PIF:\n");
+    printf("Token | Position\n");
+    for(index = 0; index < pifLength; index++) {
+        printf("%s | %d\n", pif[index].token, pif[index].position);
+    
+    }
+}
+%} 
+STRING "\"[a-zA-Z]+\""
+DIGIT [0-9]
+NZ_DIGIT [1-9]
+LETTER [a-zA-Z]
+IDENTIFIER [a-z][a-zA-Z0-9]*
+%%
+'[{LETTER}{DIGIT}]' {addConstantOrIdentifier(yytext);}
+{STRING} {addConstantOrIdentifier(yytext);}
+(\+?|-){NZ_DIGIT}{DIGIT}*|0 {addConstantOrIdentifier(yytext);}
+\0|1 {addConstantOrIdentifier(yytext);}
+[+\-*/%] {addToPifWithoutPosition(yytext);}
+==|<|<=|>=|>|<> {addToPifWithoutPosition(yytext);}
+&&|\|\||! {addToPifWithoutPosition(yytext);}
+=|>>|<< {addToPifWithoutPosition(yytext);}
+:|;|\s|\[|\]|\{|\} {addToPifWithoutPosition(yytext);}
+if|else|int|char|bool|for|while|@ {addToPifWithoutPosition(yytext);}
+{IDENTIFIER} {addConstantOrIdentifier(yytext);}
+[\t\n ]+
+. {printf("Unrecognized character: %s\n", yytext);}
+%%
+int main( argc, argv ) 
+int argc;
+char **argv; 
+{ 
+    ++argv, --argc; /* skip over program name */ 
+    if ( argc > 0 ) 
+    yyin = fopen( argv[0], "r" ); 
+    else 
+     yyin = stdin; 
+    yylex(); 
+    printStructures();
+
+    return 0;
+} 

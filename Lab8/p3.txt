@@ -1,0 +1,19 @@
+{
+@size: int;
+>>size;
+@numbers: int[size];
+@sum: int;
+sum = 0;
+@index: int;
+index = 0;
+while index < size {
+>>numbers[index];
+index = + index 1;
+}
+index = 0;
+while index < size {
+sum = + sum numbers[index];
+index = + index 1;
+}
+<<sum;
+}

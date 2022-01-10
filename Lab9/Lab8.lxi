@@ -1,0 +1,57 @@
+%{
+#include "y.tab.h"
+#include <stdlib.h>
+#include <stdio.h>
+%}
+
+%option noyywrap
+%option caseless
+
+DIGIT [0-9]
+NZ_DIGIT [1-9]
+LETTER [a-zA-Z]
+IDENTIFIER [a-z][a-zA-Z0-9]*
+STRING ["][^\n"]*["]
+CHARACTER '[{LETTER}{DIGIT}]' 
+NUMBER (\+?|-){NZ_DIGIT}{DIGIT}*|0
+
+%%
+
+[\t\n ]+
+
+{CHARACTER}     {return CONST_CHAR;}
+{STRING}        {return CONST_STRING;}
+{NUMBER}        {return CONST_NUMBER;}
+
+"+"     {return SUM;}
+"-"     {return SUBTRACT;}
+"*"     {return MULTIPLY;}
+"/"     {return DIVIDE;}
+"<"     {return LOWER;}
+">"     {return GREATER;}
+"="     {return ASSIGN;}
+"@"     {return DEFINE;}
+"=="    {return EQUAL;}
+"<="    {return LOWEREQUAL;}
+">="    {return GREATEREQUAL;}
+"<>"    {return NOTEQUAL;}
+"&&"    {return AND;}
+"||"    {return OR;}
+">>"    {return IN;}
+"<<"    {return OUT;}
+
+":"     {return TWODOTS;}
+";"     {return DOTCOMMA;}
+"["     {return OPENSQUARE;}
+"]"     {return CLOSESQUARE;}
+"{"     {return OPENBRACKET;}
+"}"     {return CLOSEBRACKET;}
+
+if    {return IF;}
+else  {return ELSE;}
+int   {return INT;}
+char  {return CHAR;}
+while {return WHILE;}
+
+{IDENTIFIER}    {return ID;}
+%%
